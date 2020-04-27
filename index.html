@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:width="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <!-- 구글폰트 -->
+    <link href="https://fonts.googleapis.com/css?family=Stylish&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#orders-box').html('');
+            listing();
+        });
+
+        summary_dict = {};
+
+        function listing() {
+            $.ajax({
+                type: "GET",
+                url: "/records",
+                data: {},
+                success: function (response) {
+                    response.reverse();
+
+                    for (let i = 0; i < response.length; i++) {
+                        make_card(i, response[i], response[i]['Timestamp'], response[i]['이름'])
+                    }
+                }
+            })
+        }
+
+        function copy_text(td_id) {
+            let text = summary_dict[td_id];
+            $('#copy_text').val(text);
+
+            var copyText = document.getElementById("copy_text");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+
+            document.execCommand("copy");
+        }
+
+        function make_card(i, res, name, time_stamp) {
+            let button_id = 'copy_' + i;
+            let temp_html = '<tr>\
+                                <td>' + time_stamp + '</td>\
+                                <td>' + name + '</td>\
+                                <td id="\'' + button_id + '\'">' + objToString(res) + '</td>\
+                                <td><button onclick="copy_text(\'' + button_id + '\')">copy</button></td>\
+                            </tr>';
+            $('#orders-box').append(temp_html);
+
+            summary_dict[button_id] = objToString(res);
+        }
+
+        // https://stackoverflow.com/questions/5612787/converting-an-object-to-a-string
+        function objToString(obj) {
+            var str = ' ';
+            for (var p in obj) {
+                if (obj.hasOwnProperty(p)) {
+                    str += p + ' : ' + obj[p] + '<br>' + '\n';
+                }
+            }
+            return str;
+        }
+
+    </script>
+
+    <style type="text/css">
+        * {
+            font-family: 'Do Hyeon', sans-serif;
+        }
+
+        .wrap {
+            width: 900px;
+            margin: auto;
+        }
+
+        .img {
+            background-image: url('https://previews.123rf.com/images/maxxyustas/maxxyustas1511/maxxyustas151100002/47858355-education-concept-books-and-textbooks-on-the-bookshelf-3d.jpg');
+            background-size: cover;
+            background-position: center;
+            width: 500px;
+            height: 300px;
+        }
+
+        .info {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .user-info {
+            margin: 20px 5px auto 5px;
+        }
+
+        h1,
+        h5 {
+            display: inline;
+        }
+
+        .order {
+            text-align: center;
+        }
+
+        .orders {
+            margin-top: 100px;
+        }
+
+        .meta_info {
+            width: 20%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrap">
+    <div class="orders">
+
+   <div>
+    <textarea id="copy_text" style="width:30%; height:100px; border:1; overflow:visible">
+        </textarea>
+   </div>
+
+        <table class="table">
+              <tbody id="orders-box">
+            <thead>
+            <tr>
+                <th scope="col">이름</th>
+                <th scope="col">작성시각</th>
+                <th scope="col">summary</th>
+                <th scope="col">copy</th>
+            </tr>
+            </thead>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>
