@@ -41,6 +41,7 @@
                 success: function (response) {
                     response.reverse();
 
+                $('#orders-box').html('');
 
                 if (response.length > 0) {
                     if (!temp_list.includes(JSON.stringify(response[0]))) {

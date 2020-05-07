@@ -23,6 +23,7 @@ cell_list = worksheet.range('A1:U1')
 cell_values = ['A. Timestamp','B. 이름','C. 생년월일','D. 진료참고자료제출','S. Positive ROS','F. MHx','H. Drug SE/allergy','G. Op Hx','J. Health Exam Hx','K. Smoking','L. Drinking','M. Regular exercise','N. Job','O. Marrige','P. Offspring','Q. Spont. Abortion','R. Menopause', 'E. 실비서류', 'T. Others', 'I. FHx']
 
 for i, val in enumerate(cell_values):
+        cell_list[i].value = val
 
 worksheet.update_cells(cell_list)
 ## HTML을 주는 부분
