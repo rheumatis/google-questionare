@@ -17,7 +17,14 @@ worksheet = doc.worksheet('Form Responses 1')
 
 app = Flask(__name__)
 
+worksheet.update_acell('U1', '')
 
+cell_list = worksheet.range('A1:U1')
+cell_values = ['A. Timestamp','B. 이름','C. 생년월일','D. 진료참고자료제출','S. Positive ROS','F. MHx','H. Drug SE/allergy','G. Op Hx','J. Health Exam Hx','K. Smoking','L. Drinking','M. Regular exercise','N. Job','O. Marrige','P. Offspring','Q. Spont. Abortion','R. Menopause', 'E. 실비서류', 'T. Others', 'I. FHx']
+
+for i, val in enumerate(cell_values):
+
+worksheet.update_cells(cell_list)
 ## HTML을 주는 부분
 @app.route('/')
 def home():
@@ -27,7 +34,8 @@ def home():
 ## API 역할을 하는 부분
 @app.route('/records', methods=['GET'])
 def records():
-    return jsonify(worksheet.get_all_records())
+    record_list = worksheet.get_all_records()
+    return jsonify(record_list[-5:])
 
 
 if __name__ == '__main__':
