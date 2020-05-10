@@ -2,7 +2,7 @@
 <html lang="en" xmlns:width="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>초진설문내용결과</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -31,7 +31,6 @@
         });
 
         summary_dict = {};
-        temp_list = [];
 
         function listing() {
             $.ajax({
@@ -41,26 +40,17 @@
                 success: function (response) {
                     response.reverse();
 
-                $('#orders-box').html('');
-
-                if (response.length > 0) {
-                    if (!temp_list.includes(JSON.stringify(response[0]))) {
-                        alert('새 설문 도착했어요!');
-                        }
-                    }
-
-                    temp_list = [];
                     for (let i = 0; i < response.length; i++) {
-                        make_card(i, response[i], response[i]['Name'], response[i]['Timestamp'])
+                        make_card(i, response[i], response[i]['A. Timestamp'], response[i]['B. 이름'])
                     }
                 }
             })
         }
-        // https://88240.tistory.com/380
+
          function replaceAll(str, searchStr, replaceStr) {
             return str.split(searchStr).join(replaceStr);
             }
-         function copy_text(td_id) {
+          function copy_text(td_id) {
             let text = summary_dict[td_id];
             text = replaceAll(text, '<br>', '');
 
@@ -76,15 +66,14 @@
         function make_card(i, res, name, time_stamp) {
             let button_id = 'copy_' + i;
             let temp_html = '<tr>\
-                                <td>' + name + '</td>\
                                 <td>' + time_stamp + '</td>\
+                                <td>' + name + '</td>\
                                 <td id="\'' + button_id + '\'">' + objToString(res) + '</td>\
                                 <td><button onclick="copy_text(\'' + button_id + '\')">copy</button></td>\
                             </tr>';
             $('#orders-box').append(temp_html);
 
             summary_dict[button_id] = objToString(res);
-            temp_list.push(JSON.stringify(res));
         }
 
         // https://stackoverflow.com/questions/5612787/converting-an-object-to-a-string
@@ -92,18 +81,12 @@
             var str = ' ';
             for (var p in obj) {
                 if (obj.hasOwnProperty(p)) {
-                    if (p === 'D. 진료참고자료제출') {
-                        str += '<span style="color:red">' + p + ' : ' + obj[p] + '</span><br>' + '\n';
-                    }else if (p === 'E. 실비서류') {
-                        str += '<span style="color:red">' + p + ' : ' + obj[p] + '</span><br>' + '\n';
-                    } else{
-                        str += '<span style="color:black">' + p + ' : ' + obj[p] + '</span><br>' + '\n';
-                    }
+                    str += p + ' : ' + obj[p] + '<br>' + '\n';
                 }
             }
             return str;
         }
-            setInterval(listing, 2000);
+
     </script>
 
     <style type="text/css">
