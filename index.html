@@ -2,7 +2,7 @@
 <html lang="en" xmlns:width="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>초진설문내용결과</title>
+    <title>초진설문</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -132,6 +132,19 @@
         .meta_info {
             width: 20%;
         }
+        body
+        {
+            counter-reset: Serial;           /* Set the Serial counter to 0 */
+        }
+
+        table
+        {
+            border-collapse: separate;
+        }
+        .table td:first-child:before {
+            counter-increment: Serial;      /* Increment the Serial counter */
+            content: "<"counter(Serial)">";        /* Display the counter *
+        }
     </style>
 </head>
 <body>
@@ -148,9 +161,9 @@
               <tbody id="orders-box">
             <thead>
             <tr>
-                <th scope="col">이름</th>
-                <th scope="col">작성시각</th>
-                <th scope="col">summary</th>
+                <th scope="col">No/Name</th>
+                <th scope="col">Time</th>
+                <th scope="col">초진설문내용</th>
                 <th scope="col">copy</th>
             </tr>
             </thead>
