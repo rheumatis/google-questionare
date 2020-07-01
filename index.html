@@ -79,17 +79,28 @@
             var str = ' ';
             for (var p in obj) {
                 if (obj.hasOwnProperty(p)) {
-                    if (p.startsWith('o. Positive ROS')) {
+                    if (p.startsWith('q. Positive ROS')) {
                         let value =  obj[p];
                         let result = value.split(',').join(',<br>' + '-' + '\n');
-                        str += '●' + p.substring(2) + ':' + '<br>' + '-' + ' '+ result + '<br>' + '\n';
+                        str += p.substring(2) + ':' + '<br>' + '-' + ' '+ result + '<br>' + '\n';
+                    } else if (p.startsWith('F. ---------------------')) {
+                        str += p.substring(2) + '   ' + obj[p] + '<br>' + '\n';
+                    } else if (p.startsWith('G. S>')) {
+                        str += p.substring(2) + '   ' + obj[p] + '<br>' + '\n';
+                    } else if (p.startsWith('s. O>')) {
+                        str += p.substring(2) + '   ' + obj[p] + '<br>' + '\n';
+                    } else if (p.startsWith('g. -------')) {
+                        str += p.substring(2) + '   ' + obj[p] + '<br>' + '\n';
+                    } else if (p.startsWith('p. -------')) {
+                        str += p.substring(2) + '   ' + obj[p] + '<br>' + '\n';
                     } else {
-                        str += '·'+ p.substring(2) + ':' + '   ' + obj[p] + '<br>' + '\n';
+                        str += p.substring(2) + ':' + '   ' + obj[p] + '<br>' + '\n';
                     }
                 }
             }
             return str;
         }
+
     </script>
 
     <style type="text/css">
@@ -146,7 +157,7 @@
         }
         .table td:first-child:before {
             counter-increment: Serial;      /* Increment the Serial counter */
-            content: "<"counter(Serial)">";        /* Display the counter *
+            content: "<"counter(Serial)">";        /* Display the counter */
         }
     </style>
 </head>

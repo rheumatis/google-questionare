@@ -17,10 +17,10 @@ worksheet = doc.worksheet('Form Responses 1')
 
 app = Flask(__name__, template_folder='C:\\app\\templates')
 
-worksheet.update_acell('V1', '')
+worksheet.update_acell('Z1', '')
 
-cell_list = worksheet.range('A1:V1')
-cell_values = ['A. Timestamp','B. 이름','C. 방문경로','D. 확인사항','o. Positive ROS','a. MHx','d. Drug SE/allergy','c. Op Hx','i. Recent Health Exam','f. Smoking','g. Alcohol','h. Exercise','j. Occupation','k. Marriage','l. Offsprings','m. Spont Abortion','n. Menopause', 'E. 실비서류', 'q. Comment', 'e. FHx','b. Current med', 'p. ROS lists: Wt loss, fatigue, fever, dry eye, dry mouth, oral ulcer, genital ulcer, weakness, bruising, rash, alopecia, raynaud, LN, SQ nodule, thyroid ds, proteinuria, back pain, constipation, anxiety, insomnia, morning pain, dental tx plan']
+cell_list = worksheet.range('A1:Z1')
+cell_values = ['A. Timestamp','B. 이름','C. 방문경로','D. 확인사항','q. Positive ROS','a. MHx','c. Drug SE/allergy','d. Op Hx','f. Health Exam in 2 yrs','h. Smoking','i. Alcohol','j. Exercise','k. Occupation','l. Marriage','m. Offsprings','n. Spont Abortion','o. Menopause', 'E. 실비서류', 'r. Comment', 'e. FHx','b. Current med', 'F. ---------------------', 'G. S>', 's. O>', 'g. -------', 'p. -------']
 
 for i, val in enumerate(cell_values):
         cell_list[i].value = val
@@ -36,7 +36,7 @@ def home():
 @app.route('/records', methods=['GET'])
 def records():
     record_list = worksheet.get_all_records()
-    return jsonify(record_list[-15:])
+    return jsonify(record_list[-10:])
 
 
 if __name__ == '__main__':
